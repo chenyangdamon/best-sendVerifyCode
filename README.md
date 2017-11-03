@@ -29,6 +29,6 @@ $(function(){
 | `container`|待处理的DOM元素,是一个jQuery对象.|`$("body")`|`String`|
 | `duration`|倒计时持续时长.|`60`|`Number`|
 | `disableClass`|倒计时期间的禁用状态样式,用户可自定义.|`"disabled"`|`String`|
-| `message`|用户自定义信息展示格式.|`"{$}秒后再次获取"`|`String`|
-| `onBeforeSend`|获取验证码的其他的操作，该处理必须要返回一个布尔值，true：表示继续获取，false：表示取消获取.|`null`|`Function`|
+| `message`|用户自定义信息展示格式,其中`{$}`是变动的数字，必须的.|`"{$}秒后再次获取"`|`String`|
+| `onBeforeSend`|获取验证码的其他的操作，该处理必须要返回一个布尔值，`true`：表示继续获取，`false`：表示取消获取.|`null`|`Function`|
 
