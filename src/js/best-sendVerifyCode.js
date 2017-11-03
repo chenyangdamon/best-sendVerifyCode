@@ -7,9 +7,9 @@
  */
 ;
 (function(root, factory) {
-	if (typeof def_iNe === "function" && def_iNe.amd) {
+	if (typeof define === "function" && define.amd) {
 		// AMD模式
-		def_iNe(["jquery"], function() {
+		define(["jquery"], function() {
 			factory.apply(root, arguments)
 		});
 	} else {
