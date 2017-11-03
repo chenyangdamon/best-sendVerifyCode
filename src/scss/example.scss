@@ -1,0 +1,86 @@
+/* 
+ Example 
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "微软雅黑";
+    font-size: 14px;
+    font-style: normal;
+    text-decoration: none;
+}
+$example-theme-color: #ff6428;
+.example {
+    &-top {
+        padding: 0 60px;
+        height: 60px;
+        line-height: 60px;
+        background: $example-theme-color;
+        color: #FFF;
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            strong {
+                margin-left: 10px;
+                font-size: 16px;
+                font-weight: normal;
+            }
+        }
+    }
+    &-container {
+        padding: 30px 60px;
+        fieldset {
+            margin-bottom: 50px;
+            border: none;
+            border-top: 1px solid #eee;
+            legend {
+                margin-left: 40px;
+                padding: 0 10px; // height:30px;
+                font-size: 16px;
+            }
+        }
+        &-local {
+            height: 300px;
+            border: 1px solid #ddd;
+        }
+        &-title {
+            height: 28px;
+            line-height: 28px;
+            border-bottom: 1px solid $example-theme-color;
+            color: $example-theme-color;
+            font-size: 12px;
+            span {
+                float: left;
+                padding: 0 10px;
+                background: $example-theme-color;
+                color: #FFF;
+            }
+        }
+        &-row {
+            margin-bottom:50px;
+            padding-top: 20px;
+            border-top: 1px solid #ededed;
+            .btn {
+                display: inline-block;
+                margin: 0 20px 20px 0;
+                padding: 6px 10px;
+                width:100px;
+                text-align:center;
+                font-size: 12px;
+                background: $example-theme-color;
+                color: #FFF;
+                &:hover {
+                    background: darken($example-theme-color, 5%);
+                }
+                &.disabled{
+                    background: lighten($example-theme-color, 30%);
+                }
+            }
+            input{
+                border:none;
+                outline:none;
+            }
+        }
+    }
+}
