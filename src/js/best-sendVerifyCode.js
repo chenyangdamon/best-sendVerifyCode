@@ -3,20 +3,18 @@
  * @author : chenyangdamon
  * @email  : 645230634@qq.com
  * @github : https://github.com/chenyangdamon
- * @Date   : 2017-02-28 22:08:02
+ * @Date   : 2017-06-28 22:08:02
  */
 ;
 (function(root, factory) {
 	if (typeof define === "function" && define.amd) {
 		// AMD模式
-		define(["jquery"], function() {
-			factory.apply(root, arguments)
-		});
+		define(["jquery"], factory);
 	} else {
 		// 全局模式
 		factory.call(root, root.$);
 	}
-})(window, function($) {
+}(typeof window !== "undefined" ? window : this, function($) {
 	/**
 	 * [SendVerifyCode description]
 	 * @return {[type]} [description]
@@ -43,8 +41,16 @@
 		this.init.apply(this, arguments);
 	};
 
+	/**
+	 * [prototype description]
+	 * @type {Object}
+	 */
 	SendVerifyCode.prototype = {
-		constructor: "SendVerifyCode",
+		/**
+		 * [constructor description]
+		 * @type {String}
+		 */
+		constructor: SendVerifyCode,
 		/**
 		 * 初始化
 		 * @param userOption
@@ -77,7 +83,7 @@
 					 * true:继续获取验证码
 					 * false:立即取消操作
 					 */
-					var _ret = _this.option.onBeforeSend();
+					var _ret = _this.option.onBeforeSend.call(_this);
 
 					if (_ret === true) {
 						// 继续获取
@@ -95,6 +101,10 @@
 
 			});
 		},
+		start:function(){
+			var _this=this;
+			_this._doStart();
+		},
 		/**
 		 * 开始倒计时
 		 */
@@ -110,17 +120,31 @@
 			_this._doGetMsg();
 			_this._doSetMsg(_text);
 
-			_timer = setInterval(function() {
+			_this._timer = setInterval(function() {
 				_text = _this._doReplaceMsg(--_iN);
 				_this._doSetMsg(_text);
 				// 倒计时结束
 				if (!_iN) {
-					clearInterval(_timer);
-					_this._bClick = true;
-					_this.option.container.removeClass(_this.option.disableClass);
-					_this._doSetMsg(_this.originMsg);
+					_this._doClose();
 				}
 			}, 1000);
+		},
+		// 倒计时结束
+		_doClose: function() {
+			var _this = this;
+			clearInterval(_this._timer);
+			_this._bClick = true;
+			_this.option.container.removeClass(_this.option.disableClass);
+			_this._doSetMsg(_this.originMsg);
+		},
+		/**
+		 * 立即终止倒计时
+		 * [shutDown description]
+		 * @return {[type]} [description]
+		 */
+		shutDown: function() {
+			var _this = this;
+			_this._doClose();
 		},
 		_doReplaceMsg: function(iN) {
 			var _this = this;
@@ -146,6 +170,15 @@
 		}
 	};
 
-	this.SendVerifyCode = SendVerifyCode;
-
-});
+	/**
+	 * [SendVerifyCode description]
+	 * @type {[type]}
+	 */
+	if (typeof define === "function" && define.amd) {
+		// AMD模式
+		return SendVerifyCode;
+	} else {
+		// 全局模式
+		this.SendVerifyCode = SendVerifyCode;
+	}
+}));

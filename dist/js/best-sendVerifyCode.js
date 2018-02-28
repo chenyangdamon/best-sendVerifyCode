@@ -1,1 +1,184 @@
-!function(n,t){"function"==typeof def_iNe&&def_iNe.amd?def_iNe(["jquery"],function(){t.apply(n,arguments)}):t.call(n,n.$)}(window,function(n){var t=function(){this.defaultsOption={container:"",duration:60,disableClass:"disabled",message:"{$}秒后再次获取",onBeforeSend:null},this.init.apply(this,arguments)};t.prototype={constructor:"SendVerifyCode",init:function(t){var o=this;o.option=n.extend({},o.defaultsOption,t),o.option.container instanceof jQuery&&(o._bClick=!0,o._tagName=o.option.container[0].tagName.toLowerCase(),o.bindEvent())},bindEvent:function(){var n=this;n.option.container.click(function(){if(n._bClick)if("function"==typeof n.option.onBeforeSend){var t=n.option.onBeforeSend();if(!0===t)n._doStart();else if(!1===t)return}else n._doStart()})},_doStart:function(){var n=this,t=null,o=n.option.duration,i=n._doReplaceMsg(o);n._bClick=!1,n.option.container.addClass(n.option.disableClass),n._doGetMsg(),n._doSetMsg(i),t=setInterval(function(){i=n._doReplaceMsg(--o),n._doSetMsg(i),o||(clearInterval(t),n._bClick=!0,n.option.container.removeClass(n.option.disableClass),n._doSetMsg(n.originMsg))},1e3)},_doReplaceMsg:function(n){return this.option.message.replace(/\{\$\}/,n)},_doSetMsg:function(n){var t=this;"input"===t._tagName?t.option.container.val(n):t.option.container.html(n)},_doGetMsg:function(){var n=this;n.originMsg="input"===n._tagName?n.option.container.val():n.option.container.html()}},this.SendVerifyCode=t});
+/*!
+ * JavaScript Components best-sendVerifyCode
+ * @author : chenyangdamon
+ * @email  : 645230634@qq.com
+ * @github : https://github.com/chenyangdamon
+ * @Date   : 2017-06-28 22:08:02
+ */
+;
+(function(root, factory) {
+	if (typeof define === "function" && define.amd) {
+		// AMD模式
+		define(["jquery"], factory);
+	} else {
+		// 全局模式
+		factory.call(root, root.$);
+	}
+}(typeof window !== "undefined" ? window : this, function($) {
+	/**
+	 * [SendVerifyCode description]
+	 * @return {[type]} [description]
+	 */
+	var SendVerifyCode = function() {
+		/**
+		 * [defaultsOption description]
+		 * @type {Object}
+		 */
+		this.defaultsOption = {
+			// 触发验证码的容器
+			container: "",
+			// 倒计时时长，默认60s
+			duration: 60,
+			// 倒计时期间，按钮处于禁用状态，用户自己指定禁用样式
+			disableClass: "disabled",
+			// 自定义文本信息
+			message: "{$}秒后再次获取",
+			// 点击发送验证码前的回调，可以进行其他操作，诸如检测手机号是否填写等等
+			// 在这个回调中用户可放回true或false来决定是否继续发送验证码
+			onBeforeSend: null
+		};
+
+		this.init.apply(this, arguments);
+	};
+
+	/**
+	 * [prototype description]
+	 * @type {Object}
+	 */
+	SendVerifyCode.prototype = {
+		/**
+		 * [constructor description]
+		 * @type {String}
+		 */
+		constructor: SendVerifyCode,
+		/**
+		 * 初始化
+		 * @param userOption
+		 */
+		init: function(userOption) {
+			var _this = this;
+			_this.option = $.extend({}, _this.defaultsOption, userOption);
+
+			if (!(_this.option.container instanceof jQuery)) return;
+
+			_this._bClick = true;
+			_this._tagName = _this.option.container[0].tagName.toLowerCase();
+			_this.bindEvent();
+		},
+
+		/**
+		 * 注册事件
+		 */
+		bindEvent: function() {
+			var _this = this;
+
+			// 注册click事件
+			_this.option.container.click(function() {
+				// 是否可以点击，防止用户连续点击
+				if (!_this._bClick) return;
+				// 判断类型是否为function，有则表示要先执行回调函数
+				if (typeof _this.option.onBeforeSend === "function") {
+					/**
+					 * onBeforeSend可以返回true或false
+					 * true:继续获取验证码
+					 * false:立即取消操作
+					 */
+					var _ret = _this.option.onBeforeSend.call(_this);
+
+					if (_ret === true) {
+						// 继续获取
+						_this._doStart();
+					} else if (_ret === false) {
+						// 取消
+						return;
+					}
+
+				} else
+				// 默认没有回调函数直接执行
+				{
+					_this._doStart();
+				}
+
+			});
+		},
+		start:function(){
+			var _this=this;
+			_this._doStart();
+		},
+		/**
+		 * 开始倒计时
+		 */
+		_doStart: function() {
+
+			var _this = this,
+				_timer = null,
+				_iN = _this.option.duration,
+				_text = _this._doReplaceMsg(_iN);
+			_this._bClick = false;
+
+			_this.option.container.addClass(_this.option.disableClass);
+			_this._doGetMsg();
+			_this._doSetMsg(_text);
+
+			_this._timer = setInterval(function() {
+				_text = _this._doReplaceMsg(--_iN);
+				_this._doSetMsg(_text);
+				// 倒计时结束
+				if (!_iN) {
+					_this._doClose();
+				}
+			}, 1000);
+		},
+		// 倒计时结束
+		_doClose: function() {
+			var _this = this;
+			clearInterval(_this._timer);
+			_this._bClick = true;
+			_this.option.container.removeClass(_this.option.disableClass);
+			_this._doSetMsg(_this.originMsg);
+		},
+		/**
+		 * 立即终止倒计时
+		 * [shutDown description]
+		 * @return {[type]} [description]
+		 */
+		shutDown: function() {
+			var _this = this;
+			_this._doClose();
+		},
+		_doReplaceMsg: function(iN) {
+			var _this = this;
+			return _this.option.message.replace(/\{\$\}/, iN);
+		},
+		/**
+		 * 设置信息
+		 * [_doSetMsg description]
+		 * @param {[type]} msg [description]
+		 */
+		_doSetMsg: function(msg) {
+			var _this = this;
+			_this._tagName === "input" ? _this.option.container.val(msg) : _this.option.container.html(msg);
+		},
+		/**
+		 * 保存原始信息
+		 * [_doGetMsg description]
+		 * @return {[type]} [description]
+		 */
+		_doGetMsg: function() {
+			var _this = this;
+			_this.originMsg = _this._tagName === "input" ? _this.option.container.val() : _this.option.container.html();
+		}
+	};
+
+	/**
+	 * [SendVerifyCode description]
+	 * @type {[type]}
+	 */
+	if (typeof define === "function" && define.amd) {
+		// AMD模式
+		return SendVerifyCode;
+	} else {
+		// 全局模式
+		this.SendVerifyCode = SendVerifyCode;
+	}
+}));

@@ -1,8 +1,10 @@
-# What is best-sendVerifyCode ?
-This is a sendVerifyCode component that focuses on the PC side of web applications. It's simple, compact, lightweight, efficient, and portable. Helps reduce the amount of development effort.
-# Dependence 
-- jquery.1.11.x
-# Installation
+# best-sendVerifyCode是什么?
+应用于web开发获取验证码的组件
+# 演示
+[Demo](https://chenyangdamon.github.io/best-pagination/dist/)
+# 依赖 
+- jquery
+# 安装
 ## script
 ```html
 // import jquery.js
@@ -10,21 +12,21 @@ This is a sendVerifyCode component that focuses on the PC side of web applicatio
 // import best-sendVerifyCode.js
 <script type="text/javascript" src="js/best-sendVerifyCode.js"></script>
 ```
-# Useage
+# 使用
 index.js
 ```html
 <script type="text/javascript">
 $(function(){
   
-  // instantiation sendVerifyCode
+  // 实例化SendVerifyCode
   var sendVerifyCode=new sendVerifyCode(options);
   
 });
 </script>
 ```
-# Constructor
-## Options
-|key|description|default|options|
+# 结构
+## 配置项
+|属性|说明|默认值|字段类型|
 |:---|---|---|---|
 | `container`|待处理的DOM元素,是一个jQuery对象.|`$("body")`|`String`|
 | `duration`|倒计时持续时长.|`60`|`Number`|

@@ -10,9 +10,13 @@
     font-style: normal;
     text-decoration: none;
 }
-$example-theme-color: #ff6428;
+$example-theme-color: #F10215;
 .example {
     &-top {
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
         padding: 0 60px;
         height: 60px;
         line-height: 60px;
@@ -29,6 +33,7 @@ $example-theme-color: #ff6428;
         }
     }
     &-container {
+        margin-top:60px;
         padding: 30px 60px;
         fieldset {
             margin-bottom: 50px;

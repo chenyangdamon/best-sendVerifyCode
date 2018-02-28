@@ -2,7 +2,7 @@
  * @Author: chenyang_pc
  * @Date:   2017-10-28 14:29:24
  * @Last Modified by:   chenyang_pc
- * @Last Modified time: 2017-11-03 16:14:01
+ * @Last Modified time: 2018-02-28 11:44:03
  */
 var gulp = require("gulp");
 var sass = require("gulp-sass");
@@ -60,7 +60,7 @@ gulp.task("minify:js",["copy:js"], function() {
         //     suffix: ".min"
         // }))
         //rename压缩后的文件名 让main.js变成main.min.js  
-        .pipe(uglify()) //执行压缩  
+        // .pipe(uglify()) //执行压缩  
         .pipe(gulp.dest("./dist/js"))
 });
 //压缩CSS  
