@@ -1,7 +1,7 @@
-# best-sendVerifyCode是什么?
+# best-sendVerifyCode 是什么?
 应用于web开发获取验证码的组件
 # 演示
-[Demo](https://chenyangdamon.github.io/best-pagination/dist/)
+[Demo](https://chenyangdamon.github.io/best-sendVerifyCode/dist/)
 # 依赖 
 - jquery
 # 安装
